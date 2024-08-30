@@ -26,6 +26,16 @@ public int maximizeNegativePnLMonths(int[] PnL)
     {
         if(!pq.isEmpty())
         {
+            /** 
+             * why is there another condition "(pq.peek() - PnL[i] > 0)"
+             * reason: we must make sure that the total sum after the conversion must be greater than the sum without change current element 
+             * to a negative element.
+             * That is to say that (prevSum + pq.peek() * 2 - PnL[i] > 0) - (prevSum + PnL[i]) > 0
+             * (prevSum + pq.peek() * 2 - PnL[i] > 0) - (prevSum + PnL[i]) > 0
+             * ==> 2 * pq.peek() - 2 * PnL[i] > 0 
+             * ==> pq.peek() > PnL[i]
+             */
+            
             if((prevSum + pq.peek() * 2 - PnL[i] > 0) && (pq.peek() - PnL[i] > 0))
             {
               currentSum = prevSum + pq.peek() * 2 - PnL[i];
