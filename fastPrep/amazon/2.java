@@ -61,7 +61,6 @@ Constraints:
 1 <= threshold <= 109
 1 <= prices[i] <= 100
 
-
 */
 
 public int reduceGifts(int[] prices, int k, int threshold) 
