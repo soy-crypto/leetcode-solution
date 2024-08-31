@@ -20,3 +20,45 @@ Returns
 int: the minimum number of boxes that need to be unloaded
 */
 
+//brute force
+public int getMinimumBoxes(int[] boxes, int capacity) 
+{
+  //Base Check
+  if(boxes == null)
+  {
+    return 0;
+  }
+
+  //Init
+  int value;
+
+  //Compute
+  /** sort the given array */
+  Arrays.sort(boxes);
+
+  /** find the maximum number of boxes to be loaded */
+  int longest = Integer.MIN_VALUE;
+  for(int i = 0; i < boxes.length - 1; i++)
+  {
+    for(int j = i; j < boxes.length; j++)
+    {
+      //current pair (min, max)
+      int localLen = Integer.MIN_VALUE;
+      if(boxes[j] <= capacity * boxes[i])
+      {
+        localLen = j - i + 1;
+      }
+
+      //Update longest
+      longest = Math.max(longest, localLen);
+      
+    }// for
+    
+  }// for
+
+  /** update value */
+  value = boxes.length - longest;
+
+  //Return
+  return value;
+}
