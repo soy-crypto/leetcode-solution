@@ -2,7 +2,7 @@
 public int calculateBeautyValues(int[] arr, int[][] pairs) 
 {
   //Base Check
-  if(arr.length == null)
+  if(arr.length == 0)
   {
     return 0;
   }
@@ -13,28 +13,44 @@ public int calculateBeautyValues(int[] arr, int[][] pairs)
   //Compuate
   /** find the used indices */
   Set<Integer> set = new HashSet<>();
+  List<Integer> bList = new ArrayList<>();
   for(int[] pair : pairs)
   {
+    //update set
     set.add(pair[0]);
     set.add(pair[1]);
-  }
+    
+    //update bList
+    if(pair[0] != pair[1])
+    {
+      bList.add(arr[pair[0]]);
+      bList.add(arr[pair[1]]);
+    }
+    else 
+    {
+      bList.add(arr[pair[0]]);
+    }
+    
+  }//
 
-  /** compute the freqeuncey for each element at the used index */
-  Map<Integer, Integer> freqMap = new HashMap<>();
+  /** get all the unused indicies  */
   Set<Integer> unused = new HashSet<>();
   for(int i = 0; i < arr.length; i++)
   {
-    if(set.contains(i))
-    {
-      freqMap.put(arr[i], freqMap.getOrDefault(arr[0], 0) + 1);
-    }
-    else 
+    if(!set.contains(i))
     {
       unused.add(i);
     }
     
   }// for
 
+  /** compute the freqeuncey for each element at the used index */
+  Map<Integer, Integer> freqMap = new HashMap<>();
+  for(int num : bList)
+  {
+    freqMap.put(num, freqMap.getOrDefault(num, 0) + 1);
+  }
+  
   /** count the total number of elements that are greater than elements at the unused indicies */
   int count = 0;
   for(int key : freqMap.keySet())
@@ -43,12 +59,12 @@ public int calculateBeautyValues(int[] arr, int[][] pairs)
     int localCount = 0;
     for(int index : unused)
     {
-      if(key < arr[i])
+      if(key < arr[index])
       {
         localCount += freqMap.get(key);
       }
       
-    }
+    }// for
 
     //update count
     count += localCount;
